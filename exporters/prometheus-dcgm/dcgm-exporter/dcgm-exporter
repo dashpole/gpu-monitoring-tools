@@ -6,6 +6,11 @@ HOST_ENGINE=no
 COLLECT_INTERVAL_MS=1000
 OUTPUT_FILE=/run/prometheus/dcgm.prom
 
+PROTO_PATH=tmp/api.proto
+KUBELET_SOCKET=unix:///podresources/kubelet.sock
+
+grpc_cli call $KUBELET_SOCKET --json_output --protofiles=$PROTO_PATH List '' > podresources.json
+
 usage() {
     echo "usage: $0 [-h] [-e] [-o output_file] [-d collect_interval_ms (>=100)]" >&2
 }
